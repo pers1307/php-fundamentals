@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: yuri
- * Date: 20.11.18
- * Time: 18:38
- */
 
 namespace spl\wrappers;
 
