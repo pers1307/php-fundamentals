@@ -16,3 +16,9 @@
 ```bash
 ./vendor/bin/phpunit
 ```
+
+```bash
+./vendor/bin/phpunit fundamentals
+```
+
+./vendor/bin/phpunit fundamentals --colors
