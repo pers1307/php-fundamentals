@@ -2,11 +2,6 @@
 
 namespace Fundamentals\Array;
 
-require dirname(__FILE__, 3)
-    . DIRECTORY_SEPARATOR . 'vendor'
-    . DIRECTORY_SEPARATOR . 'autoload.php';
-
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,21 +9,51 @@ use PHPUnit\Framework\TestCase;
  */
 class ArrayChangeKeyCaseTest extends TestCase
 {
-    #[DataProvider('provider')]
-    public function test(array $input, array $expected, int $case, string $message)
+    public function testCaseUpperSuccess()
     {
+        $expected = ["FIRST" => 1, "SECOND" => 4];
+        $input = ["FirSt" => 1, "SecOnd" => 4];
+
         $this->assertSame(
             $expected,
-            array_change_key_case($input, $case),
-            $message
+            array_change_key_case($input, CASE_UPPER),
+            'Привести ключи к верхнему регистру'
         );
     }
 
-    public static function provider(): array
+    public function testCaseLowerSuccess()
     {
-        return [
-            [["FirSt" => 1, "SecOnd" => 4], ["FIRST" => 1, "SECOND" => 4], CASE_UPPER, 'Привести ключи к верхнему регистру'],
-            [["FirSt" => 1, "SecOnd" => 4], ["first" => 1, "second" => 4], CASE_LOWER, 'Привести ключи к нижнему регистру'],
-        ];
+        $expected = ["first" => 1, "second" => 4];
+        $input = ["FirSt" => 1, "SecOnd" => 4];
+
+        $this->assertSame(
+            $expected,
+            array_change_key_case($input),
+            'Привести ключи к верхнему регистру'
+        );
+    }
+
+    public function testKeyIsEmpty()
+    {
+        $expected = ["first" => 1, "" => 4];
+        $input = ["FirSt" => 1, "" => 4];
+
+        $this->assertSame(
+            $expected,
+            array_change_key_case($input),
+            'Один из ключей пустой'
+        );
+    }
+
+    public function testKeyIsNumber()
+    {
+        $expected = [100 => 1, "first" => 4];
+        $input = [100 => 1, "FirSt" => 4];
+
+        $this->assertSame(
+            $expected,
+            array_change_key_case($input),
+            'Один из ключей это число'
+        );
     }
 }

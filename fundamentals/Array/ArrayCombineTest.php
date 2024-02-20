@@ -2,31 +2,37 @@
 
 namespace Fundamentals\Array;
 
-require dirname(__FILE__, 3)
-    . DIRECTORY_SEPARATOR . 'vendor'
-    . DIRECTORY_SEPARATOR . 'autoload.php';
-
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use ValueError;
 
 /**
  * Создаёт новый массив, используя один массив в качестве ключей, а другой для его значений
  */
 class ArrayCombineTest extends TestCase
 {
-    #[DataProvider('provider')]
-    public function test(array $keys, array $values, array $expected)
+    public function testSuccess()
     {
+        $expected = ['green' => 'avocado', 'red' => 'apple', 'yellow' => 'banana'];
+        $keys = ['green', 'red', 'yellow'];
+        $values = ['avocado', 'apple', 'banana'];
+
         $this->assertSame(
             $expected,
             array_combine($keys, $values)
         );
     }
 
-    public static function provider(): array
+    public function testKeysAndValuesnotEqual()
     {
-        return [
-            [['green', 'red', 'yellow'], ['avocado', 'apple', 'banana'], ['green' => 'avocado', 'red' => 'apple', 'yellow' => 'banana']],
-        ];
+        $expected = ['green' => 'avocado', 'red' => 'apple', 'yellow' => 'banana'];
+        $keys = ['green', 'red', 'yellow'];
+        $values = ['avocado', 'apple'];
+
+        $this->expectException(ValueError::class);
+
+        $this->assertSame(
+            $expected,
+            array_combine($keys, $values)
+        );
     }
 }

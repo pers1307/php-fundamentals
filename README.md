@@ -21,4 +21,7 @@
 ./vendor/bin/phpunit fundamentals
 ```
 
+```bash
 ./vendor/bin/phpunit fundamentals --colors
+```
+
